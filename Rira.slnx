@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="Rira.Application/Rira.Application.csproj" />
+  <Project Path="Rira.Domain/Rira.Domain.csproj" />
+  <Project Path="Rira.Infrastructure/Rira.Infrastructure.csproj" />
+  <Project Path="Rira.WebApi/Rira.WebApi.csproj" />
+</Solution>
