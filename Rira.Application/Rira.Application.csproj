@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Rira.Infrastructure\Rira.Infrastructure.csproj" />
+  </ItemGroup>
+
 </Project>
