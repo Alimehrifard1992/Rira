@@ -1,6 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using Rira.Application.Contracts;
 using Rira.Application.Dtos;
+using Rira.Application.Errors;
+using Rira.Application.Helper;
+using Rira.Application.ViewModel;
 
 namespace Rira.WebApi.Controllers
 {
@@ -17,34 +22,58 @@ namespace Rira.WebApi.Controllers
         }
         #endregion
 
+        #region [-GetAll-]
         [HttpGet("GetAll")]
         public async Task<IActionResult> GetAll()
         {
-            return new ObjectResult(await _taskService.GetAllTasks());
+            var result = await _taskService.GetAllTasksAsync();
+            return Ok(result);
         }
+        #endregion
 
+        #region [-Get-]
         [HttpGet("Get")]
         public async Task<IActionResult> Get([FromQuery] Guid id)
         {
-            return new ObjectResult(await _taskService.GetTask(id));
+            var result = await _taskService.GetTaskAsync(id);
+            return Ok(result);
         }
+        #endregion
 
+        #region [-Post-]
         [HttpPost("Post")]
         public async Task<IActionResult> Post([FromBody] PostTaskServiceDto dto)
         {
-            return new ObjectResult(await _taskService.PostTask(dto));
-        }
+            if (dto.DueDate == default)
+            {
+                return BadRequest(TaskErrors.ValuesAreNotValid);
+            }
+            var id = await _taskService.PostTaskAsync(dto);
 
+            return StatusCode(StatusCodes.Status200OK, new { Id = id });
+        }
+        #endregion
+
+        #region [-Put-]
         [HttpPut("Put")]
         public async Task<IActionResult> Put([FromBody] PutTaskServiceDto dto)
         {
-            return new ObjectResult(await _taskService.PutTask(dto));
+            if (dto == null || !ModelState.IsValid || dto.DueDate == default)
+            {
+                return BadRequest(TaskErrors.ValuesAreNotValid);
+            }
+            await _taskService.PutTaskAsync(dto);
+            return Ok();
         }
+        #endregion
 
+        #region [-Delete-]
         [HttpDelete("Delete")]
         public async Task<IActionResult> Delete([FromQuery] Guid id)
         {
-            return new ObjectResult(await _taskService.DeleteTask(id));
+            await _taskService.DeleteTaskAsync(id);
+            return Ok();
         }
+        #endregion
     }
 }
