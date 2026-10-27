@@ -1,6 +1,4 @@
-﻿using Newtonsoft.Json;
-using Rira.Application.ViewModel;
-using System.Runtime.Serialization;
+﻿using Rira.Application.ViewModel;
 
 namespace Rira.Application.Helper
 {

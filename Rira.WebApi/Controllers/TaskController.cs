@@ -1,11 +1,7 @@
-﻿using Microsoft.AspNetCore.Http.HttpResults;
-using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
+﻿using Microsoft.AspNetCore.Mvc;
 using Rira.Application.Contracts;
 using Rira.Application.Dtos;
 using Rira.Application.Errors;
-using Rira.Application.Helper;
-using Rira.Application.ViewModel;
 
 namespace Rira.WebApi.Controllers
 {
